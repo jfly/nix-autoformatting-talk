@@ -1,0 +1,6 @@
+# Nix
+/result*
+/.direnv
+
+# Build artifacts
+/build
