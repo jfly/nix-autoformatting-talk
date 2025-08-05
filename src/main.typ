@@ -1,5 +1,4 @@
 #import "@preview/touying:0.6.1": *
-#import "@preview/pinit:0.2.2": *
 #import themes.simple: *
 
 #show: simple-theme.with(aspect-ratio: "16-9")
@@ -428,31 +427,6 @@ nix-repl> lib.getExe pkgs.cowsay
 #pause
 (This is oversimplified)
 
-== Let's take a look at `nix` itself
-
-The lookup lives in `nix/src/nix/fmt.cc` in Nix 2.28.4#footnote[https://github.com/NixOS/nix/blob/2.28.4/src/nix/fmt.cc#L51]:
-
-#box[
-  #show raw: it => {
-    show regex("pin\d"): it => pin(it.text)
-    it
-  }
-
-  #text(size: .75em)[
-    ```cpp
-    auto installable_ = parseInstallable(store, ".");
-    auto & installable = InstallableValue::require(*installable_);
-    auto app = installable.toApp(*evalState).resolve(evalStore, store);
-    ...
-    execProgramInStore(store, UseLookupPath::DontUse, pin1app.programpin2, programArgs);
-    ```
-  ]
-]
-
-#pause
-#pinit-highlight("pin1", "pin2")
-#pinit-point-from(("pin1", "pin2"))[We need this]
-
 == Can we do this without a change to `nix`?
 
 We need to do the equivalent of `lib.getExe` from `nixpkgs`.
@@ -618,6 +592,23 @@ error: attribute 'x86_64-linux' missing
 - I submit a fix to none-ls
   #footnote[https://github.com/nvimtools/none-ls.nvim/pull/272/commits/128c1310d9c089ba60eb49eac298f8025f945577],
   but I am now fed up with how difficult this is to implement
+#pause
+- The lookup lives in `nix/src/nix/fmt.cc` in Nix 2.28.4:
+
+#box[
+  #text(size: .75em)[
+    ```cpp
+    auto installable_ = parseInstallable(store, ".");
+    auto & installable = InstallableValue::require(*installable_);
+    auto app = installable.toApp(*evalState).resolve(evalStore, store);
+    ...
+    execProgramInStore(store, UseLookupPath::DontUse, app.program, programArgs);
+    ```
+  ]
+]
+
+== Contributing to nix
+
 - So, I put together a PR to `NixOS/nix` #footnote[https://github.com/NixOS/nix/pull/13063] and attend a Nix team meeting
 
 #pause
@@ -635,7 +626,7 @@ Nix 2.29.0 includes a new `nix formatter` subcommand. Notably:
   ```
 ]
 
-== That's all Folks!
+== #text(style: "italic")[That's all Folks!]
 
 If you use `neovim`, consider using the `nix_flake_fmt` `none-ls.nvim` builtin I maintain.
 

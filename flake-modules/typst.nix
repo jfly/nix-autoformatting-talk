@@ -9,7 +9,6 @@
     }:
     let
       typst = pkgs.typst.withPackages (ps: [
-        ps.pinit
         ps.touying
       ]);
     in
