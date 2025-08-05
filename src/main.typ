@@ -21,6 +21,8 @@
     #style(part: 1)[Treefmt]
 
     #style(part: 2)[Let's build a Neovim plugin]
+
+    // <<< #style(part: 3)[Next steps]
   ]
 }
 
@@ -565,6 +567,16 @@ $ nix eval .#formatter --raw --apply 'formatters:
   ```
 ]
 
+// <<< TODO: only add this if you need more slides
+// <<< == While we were doing all that, treefmt 2 came out
+// <<<
+// <<< #quote(
+// <<<   block: true,
+// <<<   attribution: [https://github.com/numtide/treefmt/releases/tag/v2.0.1],
+// <<< )[
+// <<<   - introduced the concept of walkers to make filesystem traversal extensible. [...] You no longer have to exclude the `.git` directory; `treefmt` will traverse files based on the git index if a `.git` directory is detected.
+// <<< ]
+
 == 2025-04-01 `nixpkgs` gets autoformatting
 
 #align(center)[
@@ -644,3 +656,18 @@ it! Feel free to reach out if you have any questions.
 
 - #link("mailto:jeremyfleischman@gmail.com")
 - `@jfly:matrix.org`
+
+
+// <<< #my-outline(3)
+// <<<
+// <<< = <<< ideas >>>
+// <<<
+// <<< #align(left)[
+// <<<   - Talk about the embarrassing state of the `nixfmt` README: https://github.com/nixos/nixfmt?tab=readme-ov-file#installation
+// <<<   - https://github.com/nvimtools/none-ls.nvim/pull/280#discussion_r2125639821
+// <<<   - https://github.com/NixOS/nix/commit/5ea7b97147744580bc5d5f7d07f764dfc2cc175b
+// <<<   - Deprecate old (pre nix 2.29 with `nix formatter` command) code path
+// <<<   - neovim fix trust: https://github.com/neovim/neovim/pull/33617
+// <<<     - -> https://github.com/neovim/neovim/pull/33617
+// <<<   - `nix fmt` specification
+// <<< ]
