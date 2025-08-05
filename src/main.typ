@@ -608,7 +608,7 @@ error: attribute 'x86_64-linux' missing
 ]
 
 #pause
-`nixpgks` has both of these flake outputs:
+`nixpkgs` has both of these flake outputs:
 
 - `formatting.<system>`
 - `legacyPackages.<system>.formatting`
