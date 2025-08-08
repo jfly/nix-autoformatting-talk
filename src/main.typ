@@ -23,7 +23,7 @@
 
   #let rev = sys.inputs.at("DIRTY_REV", default: none)
   #if rev != none {
-    link("https://github.com/jfly/nix-autoformatting-talk/tree/" + rev)[#rev]
+    link("https://github.com/jfly/nix-autoformatting-talk/tree/" + rev)
   }
 ]
 
@@ -269,23 +269,17 @@ In `nixpkgs`: #only("3-")[#footnote[Evaluation caching gets this closer to 2 sec
 == Some pain points
 
 - Nix (< 2.29) doesn't expose the formatter entrypoint
-  - I opted to work around this by embedding Nix-in-Lua
+  - I opted to work around this by shelling out to Nix from Lua
 #pause
 - `none-ls.nvim` is the natural place to put this, but, its support for `dynamic_command` needed some love
 #pause
 - Treefmt refused to format the (untracked) temp files `none-ls` creates
-  - I ran into enough Treefmt bugs while looking into this that `@brianmcgee`
-    made me a maintainer
+  - I ran into enough Treefmt bugs that I became a maintainer
 #pause
 - Neovim's support for trusting directories was buggy
 
 #pause
 12 PRs to none-ls.nvim, 2 PRs to treefmt, 1 PR to neovim
-
-// <<< image("screenshots/none-ls-make-dynamic-command-async.png"),
-// <<< image("screenshots/none-ls-run-dynamic-command-immediately.png"),
-// <<< image("screenshots/none-ls-clear-cache.png"),
-// <<< image("screenshots/none-ls-add-nix-flake-fmt-builtin.png"),
 
 == This code does not spark joy
 
@@ -334,6 +328,8 @@ The lookup lives in `nix/src/nix/fmt.cc` in Nix 2.28.4:
 == #text(style: "italic")[That's all Folks!]
 
 If you use `neovim`, consider using the `nix_flake_fmt` `none-ls.nvim` builtin I maintain. #footnote[NixVim config here: https://github.com/jfly/nix-autoformatting-talk/blob/main/demos/nixvim/demo.nix]
+
+Try it! #text(0.9em)[```console nix run github:jfly/nix-autoformatting-talk#demos/nixvim```]
 
 If you use some other IDE, consider implementing a `nix_flake_fmt` plugin for
 it! Feel free to reach out if you have any questions.
