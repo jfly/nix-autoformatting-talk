@@ -51,12 +51,13 @@
 
 == Goals for this talk
 
-1. If you're want your project consistently formatted in CI and local dev, use `treefmt`
-2. If you're contributing to projects that use `nix`, use `none-ls.nvim`'s `nix_flake_fmt`, or build something like it
+1. Use `treefmt`.
+2. Use `none-ls.nvim`'s `nix_flake_fmt`, or build something like it.
 3. Contribute to Nix! It's fun and not scary.
 
 = Treefmt Soapbox
 
+#pause
 #image("tree-fm-tea.svg", height: 75%)
 
 == Why Treefmt?
@@ -252,7 +253,7 @@ There are 3 ways people try to automate this:
 
 - Run `nix fmt <filename>` on save
 #pause
-- Performance matters, so we have to cache the entrypoint
+- But, performance matters, so we have to cache the formatter entrypoint
 
 #pause
 In `nixpkgs`: #only("3-")[#footnote[Evaluation caching gets this closer to 2 seconds, but what if you're editing `flake.nix`?]]
@@ -268,15 +269,15 @@ In `nixpkgs`: #only("3-")[#footnote[Evaluation caching gets this closer to 2 sec
 
 == Some pain points
 
-- Nix (< 2.29) doesn't expose the formatter entrypoint
-  - I opted to work around this by shelling out to Nix from Lua
-#pause
 - `none-ls.nvim` is the natural place to put this, but, its support for `dynamic_command` needed some love
 #pause
 - Treefmt refused to format the (untracked) temp files `none-ls` creates
   - I ran into enough Treefmt bugs that I became a maintainer
 #pause
 - Neovim's support for trusting directories was buggy
+#pause
+- Nix (< 2.29) doesn't expose the formatter entrypoint
+  - I opted to work around this by shelling out to Nix from Lua
 
 #pause
 12 PRs to none-ls.nvim, 2 PRs to treefmt, 1 PR to neovim
@@ -285,13 +286,13 @@ In `nixpkgs`: #only("3-")[#footnote[Evaluation caching gets this closer to 2 sec
 
 - `nix_flake_fmt` has landed in `none-ls.nvim`!
 #pause
-- I'm vaguely worried it's going to get kicked out of `none-ls.nvim`
+- I'm worried it's going to get kicked out of `none-ls.nvim`
 
 #image("screenshots/none-ls-wtf.png")
 
 == Can we make this easier?
 
-The lookup lives in `nix/src/nix/fmt.cc` in Nix 2.28.4:
+`nix/src/nix/fmt.cc` in Nix 2.28.4:
 
 #box[
   #text(size: .75em)[
@@ -331,7 +332,7 @@ If you use `neovim`, consider using the `nix_flake_fmt` `none-ls.nvim` builtin I
 
 Try it! #text(0.9em)[```console nix run github:jfly/nix-autoformatting-talk#demos/nixvim```]
 
-If you use some other IDE, consider implementing a `nix_flake_fmt` plugin for
+If you use some other IDE, consider implementing a similar plugin for
 it! Feel free to reach out if you have any questions.
 
 - #link("mailto:jeremyfleischman@gmail.com")
